@@ -1,7 +1,7 @@
 body {
     font-family: "Lato", Helvetica, Arial, sans-serif !important;
     color: #393939 !important;
-    font-size: 13px;
+    font-size: 15px;
     background: #FFF;
 }
 
@@ -114,7 +114,7 @@ h1, h2, h3, h4, h5, h6 {
 .flat-form .header h3 {
     margin-top: 0;
     margin-bottom: 0;
-    font-weight: 200;
+    font-weight: 400!important;
 }
 
 .flat-form .header label {
@@ -159,6 +159,7 @@ h1, h2, h3, h4, h5, h6 {
     text-align: center;
     top: -1px;
     width: 45px;
+    margin-right: 61px;
 }
 
 .alert-bg-white .icon i {
@@ -168,6 +169,7 @@ h1, h2, h3, h4, h5, h6 {
     margin-top: -10px;
     position: absolute;
     top: 50%;
+    margin-right: 61px;
 }
 
 .alert-bg-white.alert-primary .icon, .alert-bg-white.alert-primary .icon:after {
@@ -263,7 +265,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .navbar-success {
-    background-color: #0FB492;
+    background-color: #0FB492!important;
     border: medium none;
 }
 

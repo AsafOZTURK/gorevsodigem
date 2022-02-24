@@ -101,6 +101,58 @@ if ($_GET["cikis"] == "ok") {
 
 
 if (isset($_POST["gorevolustur"])) {
+    $gorev_veren = $_POST["gorev_veren"];
+    $goren_gorevli = $_POST[""];
     
-    
+    $gorevkaydet = $db->prepare("INSERT INTO gorev SET
+        gorev_detay=:detay,
+        gorev_veren=:veren,
+        gorev_gorevli=:gorevli,
+        gorev_boyut=:boyut,
+        gorev_gizlilik=:gizlilik        
+    ");
+    $insert = $gorevkaydet->execute(array(
+        "detay" => $_POST["gorev_detay"],
+        "veren" => $_POST["gorev_veren"],
+        "gorevli" => $_POST["gorev_gorevli"],
+        "boyut" => $_POST["gorev_boyut"],
+        "gizlilik" => $_POST["gorev_gizlilik"]
+        
+    ));
+
+    if ($insert) {
+
+        Header("Location:anasayfa.php?durum=goreveklendi");
+        exit;
+        
+    } else {
+
+        Header("Location:anasayfa.php?durum=basarisiz");
+        exit;
+    }
+}
+
+if (isset($_POST["gorevnotekle"])) {
+    $gorev_id = $_POST["gorev_id"];
+
+    $gorevnotkaydet = $db->prepare("INSERT INTO gorevnotu SET
+        gorevnotu_detay=:detay,
+        gorevnotu_gorev=:gorev_id,
+        gorevnotu_ekleyen=:ekleyen       
+    ");
+    $insert = $gorevnotkaydet->execute(array(
+        "detay" => $_POST["gorevnotu_detay"],
+        "gorev_id" => $gorev_id,
+        "ekleyen" => $_POST["gorevnotu_ekleyen"]   
+    ));
+
+    if ($insert) {
+        Header("Location:gorev.php?gorev_id=$gorev_id&durum=gorevnoteklendi");
+        exit;
+        
+    } else {
+        Header("Location:gorev.php?gorev_id=$gorev_id&durum=noteklemebasarisiz");
+        exit;
+    }
+
 }

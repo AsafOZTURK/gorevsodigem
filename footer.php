@@ -11,7 +11,6 @@
     });
 </script>
 <script src="assets/js/icheck.js"></script>
-<!-- #Fuelux Form Wizard -->
 <script src="assets/js/fuelux.min.js"></script>
 <script type="text/javascript">
     $('#myWizard').wizard();
@@ -56,7 +55,7 @@
         $('.input-group input[required], .input-group textarea[required], .input-group select[required]').trigger('change');
     });
 </script>
-<script type="text/javascript" src="assets/plugins/bootstrap-switch/js/bootstrap-switch.min.js"></script>
+<script type="text/javascript" src="assets/bootstrap-switch.min.js"></script>
 <script type="text/javascript">
     $(".switch-check").bootstrapSwitch();
 </script>

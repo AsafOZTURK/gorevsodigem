@@ -21,22 +21,27 @@
 
                     <tr>
                         <td><?php echo $kullanicicek["kullanici_ad"]. " " . $kullanicicek["kullanici_soyad"];?></td>
-                        <td></td>
+                        <td>
+                            <?php
+                            $gorevsor = $db->prepare("SELECT * FROM gorev WHERE gorev_gorevli=:id AND gorev_durum=:durum");
+                            $gorevsor->execute(array(
+                                'id' => $kullanicicek['kullanici_id'],
+                                'durum' => 1 //sadece başlandı olan görevleri listelemek için
+                            ));
+                            
+                            while ($gorevcek = $gorevsor->fetch(PDO::FETCH_ASSOC)) {?>
+
+                                <font color='#f9a546'><b><i class="fa fa-play"></i> <?php echo $gorevcek["gorev_detay"]; ?></b></font></br>
+                                <!-- <font color='#2E86C1'><i class='fa fa-moon-o'></i> Günü bitirdi: "Yeni içerik hazırlandı"<br> -->
+
+                            <?php } ?>
+
+                        </td>
                         <td><a href='profil.php?kullanici_id=<?php echo $kullanicicek["kullanici_id"];?>'><button type="button" class="btn btn-info" style="width:100%;"><i class="fa fa-user"></i> Profil</button></td>
                     </tr>
 
                 <?php } ?>
 
-                <!-- <tr> ÖRNEK OLARAK DURSUN SONRA BAKICAM
-                    <td>Tuğçe Keleş</td>
-                    <td>
-                        <font color='#2E86C1'><i class='fa fa-moon-o'></i> Günü bitirdi: "Yeni içerik hazırlandı"<br>
-                            <font color='#f9a546'><b><i class="fa fa-play"></i> Yeni broşür serisi hazırlama içerik desteği</b></font></br><br>
-                            <font color='#f9a546'><b><i class="fa fa-play"></i> Broşür içerik ekleme kontrolü</b></font></br><br>
-                            <font color='#f9a546'><b><i class="fa fa-play"></i> Paylaşım kontrolü</b></font></br>
-                    </td>
-                    <td><a href='anasayfa.php?prnum=54&sayfaturu=6'><button type="button" class="btn btn-info" style="width:100%;"><i class="fa fa-user"></i> Profil</button></td>
-                </tr> -->
             </tbody>
         </table>
     </div>

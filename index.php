@@ -19,6 +19,7 @@
     <link rel="stylesheet" href="assets/css/slider.css">
     <link rel="stylesheet" href="assets/css/datetime.css">
     <link rel="stylesheet" href="assets/css/bs3.css">
+    <script src="https://kit.fontawesome.com/0bcd3cd97b.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
