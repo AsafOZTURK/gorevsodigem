@@ -114,11 +114,11 @@ $pkullanicicek = $pkullanicisor->fetch(PDO::FETCH_ASSOC);
                         <td><?php echo $gorevcek["kullanici_ad"] . " " . $gorevcek["kullanici_soyad"]; ?><br><?php echo $gorevcek["gorev_tarih"]; ?><br>15.10.2021 (17:00)</td>
                         <td><strong>
                             <?php 
-                            if ($gorevcek["gorev_gizlilik"] == 2) {?>
+                            if ($gorevcek["gorev_gizlilik"] == 2 & $gorevcek["gorev_gorevli"] != $kullanicicek["kullanici_id"]) {?>
 
                                 <font color="#d44344">Gizli görev.</font>
 
-                            <?php } else if ($gorevcek["gorev_gizlilik"] == 1) { 
+                            <?php } else if ($gorevcek["gorev_gizlilik"] | 1 & $gorevcek["gorev_gorevli"] == $kullanicicek["kullanici_id"]) { 
 
                                 echo $gorevcek["gorev_detay"]; 
 

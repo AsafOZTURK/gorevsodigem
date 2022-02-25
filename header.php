@@ -66,6 +66,7 @@ if ($say == 0) {
                                 <ul class="nav navbar-nav">
                                     <li><a href="anasayfa.php"> <i class="fa fa-bullhorn fa-3x"></i> Olaylar</a></li>
                                     <li><a href="tum-gorevler.php"> <i class="fa fa-th-list fa-3x"></i>Tüm Görevler</a></li>
+                                    <li><a href="fikir-havuzu.php"><i class="fa fa-lightbulb-o fa-3x"></i>Fikir Havuzu</a></li>
                                     <li><a href="personel.php"><i class="fa fa-users fa-3x"></i>Personel</a></li>
                                 </ul>
                                 <ul class="nav navbar-nav navbar-right">

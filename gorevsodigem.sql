@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Anamakine: localhost
--- Üretim Zamanı: 24 Şub 2022, 12:11:48
+-- Üretim Zamanı: 25 Şub 2022, 00:05:58
 -- Sunucu sürümü: 5.7.17-log
 -- PHP Sürümü: 5.6.30
 
@@ -19,6 +19,33 @@ SET time_zone = "+00:00";
 --
 -- Veritabanı: `gorevsodigem`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Tablo için tablo yapısı `fikir`
+--
+
+CREATE TABLE `fikir` (
+  `fikir_id` int(11) NOT NULL,
+  `fikir_baslik` varchar(50) COLLATE utf8_turkish_ci NOT NULL,
+  `fikir_aciklama` text COLLATE utf8_turkish_ci NOT NULL,
+  `fikir_tarih` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `fikir_ekleyen` int(11) NOT NULL,
+  `fikir_tur` enum('1','2','3','4','5','6','7','8','10') COLLATE utf8_turkish_ci NOT NULL,
+  `fikir_rol` enum('1','2','3','4','5') COLLATE utf8_turkish_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_turkish_ci;
+
+--
+-- Tablo döküm verisi `fikir`
+--
+
+INSERT INTO `fikir` (`fikir_id`, `fikir_baslik`, `fikir_aciklama`, `fikir_tarih`, `fikir_ekleyen`, `fikir_tur`, `fikir_rol`) VALUES
+(1, 'Fikir ekleme deneme 1', 'Lorem Ipsum, dizgi ve baskı endüstrisinde kullanılan mıgır metinlerdir. Lorem Ipsum, adı bilinmeyen bir matbaacının bir hurufat numune kitabı oluşturmak üzere bir yazı galerisini alarak karıştırdığı 1500\'lerden beri endüstri standardı sahte metinler olarak kullanılmıştır. Beşyüz yıl boyunca varlığını sürdürmekle kalmamış, aynı zamanda pek değişmeden elektronik dizgiye de sıçramıştır. 1960\'larda Lorem Ipsum pasajları da içeren Letraset yapraklarının yayınlanması ile ve yakın zamanda Aldus PageMaker gibi Lorem Ipsum sürümleri içeren masaüstü yayıncılık yazılımları ile popüler olmuştur', '2022-02-24 23:43:09', 1, '1', '5'),
+(2, 'Fikir ekleme deneme 2', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum', '2022-02-24 23:43:56', 4, '3', '1'),
+(3, 'Fikir ekleme deneme 3', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum', '2022-02-24 23:44:17', 3, '5', '3'),
+(4, 'Fikir ekleme deneme 4', 'BU DA SON DENEME OLSUN ', '2022-02-24 23:44:49', 2, '8', '4'),
+(5, 'SON DENEME FİKİR EKLEMESİ', 'SON DENEME FİKİR EKLEMESİSON DENEME FİKİR EKLEMESİSON DENEME FİKİR EKLEMESİSON DENEME FİKİR EKLEMESİSON DENEME FİKİR EKLEMESİSON DENEME FİKİR EKLEMESİ', '2022-02-25 00:00:00', 1, '10', '5');
 
 -- --------------------------------------------------------
 
@@ -47,7 +74,7 @@ INSERT INTO `gorev` (`gorev_id`, `gorev_detay`, `gorev_veren`, `gorev_gorevli`, 
 (2, 'Deneme görevi 2', 1, 1, '2022-02-23 23:18:45', '0000-00-00 00:00:00', '2', '5', '2'),
 (3, 'Deneme görevi 3', 3, 1, '2022-02-23 23:38:17', '0000-00-00 00:00:00', '1', '4', '1'),
 (4, 'Deneme görevi 4', 3, 1, '2022-02-23 23:38:29', '0000-00-00 00:00:00', '0', '1', '1'),
-(5, 'Deneme görevi 5', 4, 3, '2022-02-24 10:18:52', '0000-00-00 00:00:00', '0', '2', '1');
+(5, 'Deneme görevi 5', 4, 3, '2022-02-24 10:18:52', '0000-00-00 00:00:00', '0', '2', '2');
 
 -- --------------------------------------------------------
 
@@ -102,6 +129,12 @@ INSERT INTO `kullanici` (`kullanici_id`, `kullanici_ad`, `kullanici_soyad`, `kul
 --
 
 --
+-- Tablo için indeksler `fikir`
+--
+ALTER TABLE `fikir`
+  ADD PRIMARY KEY (`fikir_id`);
+
+--
 -- Tablo için indeksler `gorev`
 --
 ALTER TABLE `gorev`
@@ -123,6 +156,11 @@ ALTER TABLE `kullanici`
 -- Dökümü yapılmış tablolar için AUTO_INCREMENT değeri
 --
 
+--
+-- Tablo için AUTO_INCREMENT değeri `fikir`
+--
+ALTER TABLE `fikir`
+  MODIFY `fikir_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- Tablo için AUTO_INCREMENT değeri `gorev`
 --
