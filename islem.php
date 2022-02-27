@@ -80,7 +80,7 @@ if (isset($_POST["kullanicigiris"])) {
     if ($say == 1) {
 
         $_SESSION["kullanici_mail"] = $kullanicimail;
-        Header("Location:anasayfa.php?durum=girisbasarili");
+        Header("Location:olaylar.php?durum=girisbasarili");
         exit;
     } else {
 
@@ -119,14 +119,15 @@ if (isset($_POST["gorevolustur"])) {
 
     if ($insert) {
 
-        Header("Location:anasayfa.php?durum=goreveklendi");
+        Header("Location:olaylar.php?durum=goreveklendi");
         exit;
     } else {
 
-        Header("Location:anasayfa.php?durum=basarisiz");
+        Header("Location:olaylar.php?durum=basarisiz");
         exit;
     }
 }
+
 
 if (isset($_POST["gorevnotekle"])) {
     $gorev_id = $_POST["gorev_id"];
@@ -178,4 +179,85 @@ if (isset($_POST["fikirekle"])) {
         exit;
 
     }
+}
+
+
+if (isset($_POST["gunebasla"])) {
+    $kullanici_id = $_POST["gunebaslabitir_kisi"];
+
+    $gorevkaydet = $db->prepare("INSERT INTO gunebaslabitir SET
+        gunebaslabitir_metin=:metin,
+        gunebaslabitir_durum=:durum,
+        gunebaslabitir_kisi=:kisi     
+    ");
+    $insert = $gorevkaydet->execute(array(
+        "metin" => $_POST["gunebaslabitir_metin"],
+        "kisi" => $kullanici_id,
+        "durum" => 'basla'
+    ));
+
+    if ($insert) {
+
+        Header("Location:olaylar.php?durum=gunebaslandi");
+        exit;
+
+    } else {
+
+        Header("Location:profil.php?kullanici_id=$kullanici_id&durum=basarisiz");
+        exit;
+    }
+
+}
+
+
+if (isset($_POST["gunubitir"])) {
+    $kullanici_id = $_POST["gunebaslabitir_kisi"];
+
+    $gorevkaydet = $db->prepare("INSERT INTO gunebaslabitir SET
+        gunebaslabitir_metin=:metin,
+        gunebaslabitir_durum=:durum,
+        gunebaslabitir_kisi=:kisi     
+    ");
+    $insert = $gorevkaydet->execute(array(
+        "metin" => $_POST["gunebaslabitir_metin"],
+        "kisi" => $kullanici_id,
+        "durum" => 'bitir'
+    ));
+
+    if ($insert) {
+
+        Header("Location:olaylar.php?durum=gunbitirildi");
+        exit;
+
+    } else {
+
+        Header("Location:profil.php?kullanici_id=$kullanici_id&durum=basarisiz");
+        exit;
+    }
+
+}
+
+
+if (isset($_POST["manuelolaykaydet"])) {
+
+    $gorevkaydet = $db->prepare("INSERT INTO olay SET
+        olay_metin=:metin,
+        olay_olusturan=:olusturan   
+    ");
+    $insert = $gorevkaydet->execute(array(
+        "metin" => $_POST["olay_metin"],
+        "olusturan" => $_POST["olay_olusturan"]
+    ));
+
+    if ($insert) {
+
+        Header("Location:olaylar.php?durum=manuelolayeklendi");
+        exit;
+
+    } else {
+
+        Header("Location:olaylar.php?durum=basarisiz");
+        exit;
+    }
+
 }

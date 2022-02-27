@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Anamakine: localhost
--- Üretim Zamanı: 25 Şub 2022, 00:05:58
+-- Üretim Zamanı: 27 Şub 2022, 18:52:36
 -- Sunucu sürümü: 5.7.17-log
 -- PHP Sürümü: 5.6.30
 
@@ -103,6 +103,44 @@ INSERT INTO `gorevnotu` (`gorevnotu_id`, `gorevnotu_detay`, `gorevnotu_gorev`, `
 -- --------------------------------------------------------
 
 --
+-- Tablo için tablo yapısı `gunebaslabitir`
+--
+
+CREATE TABLE `gunebaslabitir` (
+  `gunebaslabitir_id` int(11) NOT NULL,
+  `gunebaslabitir_kisi` int(11) NOT NULL,
+  `gunebaslabitir_metin` text COLLATE utf8_turkish_ci NOT NULL,
+  `gunebaslabitir_zaman` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `gunebaslabitir_durum` enum('basla','bitir') COLLATE utf8_turkish_ci DEFAULT 'bitir'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_turkish_ci;
+
+--
+-- Tablo döküm verisi `gunebaslabitir`
+--
+
+INSERT INTO `gunebaslabitir` (`gunebaslabitir_id`, `gunebaslabitir_kisi`, `gunebaslabitir_metin`, `gunebaslabitir_zaman`, `gunebaslabitir_durum`) VALUES
+(1, 1, 'güne başlama ilk denemesi 1', '2022-02-27 16:48:24', 'basla'),
+(2, 1, 'günü bitirme ilk denemesi 1', '2022-02-27 17:02:54', 'bitir'),
+(3, 1, 'GÜNE BAŞLAMA DENEME 2', '2022-02-27 17:40:04', 'basla'),
+(4, 1, 'GÜNÜ BİTİRME DENEME 2', '2022-02-27 17:40:13', 'bitir'),
+(5, 2, 'Güne başlama denemesi 3', '2022-02-27 17:43:06', 'basla'),
+(6, 2, 'Güne bitirme denemesi 3', '2022-02-27 17:43:14', 'bitir'),
+(7, 2, 'Güne bitirme denemesi 3', '2022-02-27 17:43:15', 'bitir'),
+(8, 2, 'Güne başlama denemesi 4', '2022-02-27 17:43:46', 'basla'),
+(9, 2, 'Günü bitirme denemesi 4', '2022-02-27 17:43:57', 'bitir'),
+(10, 3, 'Güne başlama denemesi 5', '2022-02-27 17:44:46', 'basla'),
+(11, 3, 'Günü bitirme denemesi 5', '2022-02-27 17:44:55', 'bitir'),
+(12, 4, 'Güne başlama denemesi 6', '2022-02-27 17:45:15', 'basla'),
+(13, 4, 'Günü bitirme denemesi 6', '2022-02-27 17:45:23', 'bitir'),
+(14, 1, 'DENEME DENEME DENEME', '2022-02-27 18:29:29', 'basla'),
+(15, 3, 'DENEME DENEME DENEME', '2022-02-27 18:31:35', 'basla'),
+(16, 2, 'DENEME DENEME DENEME', '2022-02-27 18:31:50', 'basla'),
+(17, 4, 'DENEME DENEME DENEME', '2022-02-27 18:32:23', 'basla'),
+(18, 4, 'deneme deneme deneme', '2022-02-27 18:32:37', 'bitir');
+
+-- --------------------------------------------------------
+
+--
 -- Tablo için tablo yapısı `kullanici`
 --
 
@@ -123,6 +161,27 @@ INSERT INTO `kullanici` (`kullanici_id`, `kullanici_ad`, `kullanici_soyad`, `kul
 (2, 'Lal ', 'Okyar', 'lalokyar@gmail.com', '25d55ad283aa400af464c76d713c07ad'),
 (3, 'Aslı', 'Orhan', 'asliorhan@gmail.com', '25d55ad283aa400af464c76d713c07ad'),
 (4, 'Alper', 'Bıçaklar', 'alperbicaklar@gmail.com', '25d55ad283aa400af464c76d713c07ad');
+
+-- --------------------------------------------------------
+
+--
+-- Tablo için tablo yapısı `olay`
+--
+
+CREATE TABLE `olay` (
+  `olay_id` int(11) NOT NULL,
+  `olay_olusturan` int(11) NOT NULL,
+  `olay_metin` text COLLATE utf8_turkish_ci NOT NULL,
+  `olay_zaman` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_turkish_ci;
+
+--
+-- Tablo döküm verisi `olay`
+--
+
+INSERT INTO `olay` (`olay_id`, `olay_olusturan`, `olay_metin`, `olay_zaman`) VALUES
+(0, 1, 'Manuel olay ekleme deneme 1', '2022-02-27 17:55:27'),
+(0, 2, 'Manuel olay ekleme deneme  22222', '2022-02-27 17:55:43');
 
 --
 -- Dökümü yapılmış tablolar için indeksler
@@ -145,6 +204,12 @@ ALTER TABLE `gorev`
 --
 ALTER TABLE `gorevnotu`
   ADD PRIMARY KEY (`gorevnotu_id`);
+
+--
+-- Tablo için indeksler `gunebaslabitir`
+--
+ALTER TABLE `gunebaslabitir`
+  ADD PRIMARY KEY (`gunebaslabitir_id`);
 
 --
 -- Tablo için indeksler `kullanici`
@@ -171,6 +236,11 @@ ALTER TABLE `gorev`
 --
 ALTER TABLE `gorevnotu`
   MODIFY `gorevnotu_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+--
+-- Tablo için AUTO_INCREMENT değeri `gunebaslabitir`
+--
+ALTER TABLE `gunebaslabitir`
+  MODIFY `gunebaslabitir_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 --
 -- Tablo için AUTO_INCREMENT değeri `kullanici`
 --

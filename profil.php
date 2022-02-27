@@ -64,12 +64,35 @@ $pkullanicicek = $pkullanicisor->fetch(PDO::FETCH_ASSOC);
             <form role='form' class='form-horizontal' action='islem.php' method='post'>
                 <div class='form-group'>
                     <div class='col-sm-10'>
-                        <div class='input-group' data-validate='length' data-length='5'> <input type='text' maxlength='300' class='form-control' name='gunebaslabitirmetni' id='validate-length' placeholder='Bugün yapacağınız çalışmaları kısaca yazınız.' required>
+                        <div class='input-group' data-validate='length' data-length='5'> <input type='text' maxlength='300' class='form-control' name='gunebaslabitir_metin' id='validate-length' placeholder='Bugün yapacağınız çalışmaları kısaca yazınız.' required>
                             <span class='input-group-addon danger'><span class='fa fa-times'></span></span>
                         </div>
                     </div>
                     <div class='col-sm-2'>
-                        <button class='btn btn-success' type='submit' name="gunebasla" style='width:100%;'><i class='fa fa-sun-o'></i> Güne Başla</button>
+                        <input type="hidden" name="gunebaslabitir_kisi" value="<?php echo $_GET["kullanici_id"]; ?>">
+                        <?php
+                        $gunebaslabitirsor = $db->prepare("SELECT * 
+                        FROM gunebaslabitir 
+                        WHERE gunebaslabitir_kisi=:id
+                        ORDER BY gunebaslabitir_zaman DESC
+                        LIMIT 1
+                        ");
+                        $gunebaslabitirsor->execute(array(
+                            'id' => $_GET["kullanici_id"]
+                        ));
+
+                        $gunebaslabitircek = $gunebaslabitirsor->fetch(PDO::FETCH_ASSOC);
+
+                        if ($gunebaslabitircek["gunebaslabitir_durum"] == 'basla') { ?>
+
+                            <button class='btn btn-danger' type='submit' name="gunubitir" style='width:100%;'><i class='fa fa-sun-o'></i> Günü Bitir</button>
+
+                        <?php } else { ?>
+
+                            <button class='btn btn-success' type='submit' name="gunebasla" style='width:100%;'><i class='fa fa-sun-o'></i> Güne Başla</button>
+
+                        <?php }
+                        ?>
                     </div>
                 </div>
             </form>
@@ -113,18 +136,17 @@ $pkullanicicek = $pkullanicisor->fetch(PDO::FETCH_ASSOC);
                     <tr>
                         <td><?php echo $gorevcek["kullanici_ad"] . " " . $gorevcek["kullanici_soyad"]; ?><br><?php echo $gorevcek["gorev_tarih"]; ?><br>15.10.2021 (17:00)</td>
                         <td><strong>
-                            <?php 
-                            if ($gorevcek["gorev_gizlilik"] == 2 & $gorevcek["gorev_gorevli"] != $kullanicicek["kullanici_id"]) {?>
+                                <?php
+                                if ($gorevcek["gorev_gizlilik"] == 2 & $gorevcek["gorev_gorevli"] != $kullanicicek["kullanici_id"]) { ?>
 
-                                <font color="#d44344">Gizli görev.</font>
+                                    <font color="#d44344">Gizli görev.</font>
 
-                            <?php } else if ($gorevcek["gorev_gizlilik"] | 1 & $gorevcek["gorev_gorevli"] == $kullanicicek["kullanici_id"]) { 
+                                <?php } else if ($gorevcek["gorev_gizlilik"] | 1 & $gorevcek["gorev_gorevli"] == $kullanicicek["kullanici_id"]) {
 
-                                echo $gorevcek["gorev_detay"]; 
-
-                            }
-                            ?>
-                            <br><a href='gorev.php?gorev_id=<?php echo $gorevcek["gorev_id"];?>'><button class='btn btn-xs btn-info' type='button'>Detay</button></a>
+                                    echo $gorevcek["gorev_detay"];
+                                }
+                                ?>
+                                <br><a href='gorev.php?gorev_id=<?php echo $gorevcek["gorev_id"]; ?>'><button class='btn btn-xs btn-info' type='button'>Detay</button></a>
                             </strong><br>
                             <?php
                             switch ($gorevcek['gorev_boyut']) {
@@ -188,13 +210,32 @@ $pkullanicicek = $pkullanicisor->fetch(PDO::FETCH_ASSOC);
         <h3 class='panel-title'>Güne Başlama ve Günü Bitirme Kayıtları</h3>
     </div>
     <div class='panel-body'>
-        <!-- <div class='alert alert-dismissable alert-bg-white alert-info'>
-            <div class='icon'><i class='fa fa-moon-o'></i></div> İdari işler.. <strong>26.04.2021 (18:14)</strong>
-        </div>
-        <div class='alert alert-dismissable alert-bg-white alert-success'>
-            <div class='icon'><i class='fa fa-sun-o'></i></div> İdari işler.. <strong>26.04.2021 (09:31)</strong>
-        </div> -->
+        <?php
+        $gunbaslabitirsorgu = $db->prepare("SELECT * 
+        FROM gunebaslabitir 
+        WHERE gunebaslabitir_kisi=:id
+        ORDER BY gunebaslabitir_zaman DESC
+        ");
+        $gunbaslabitirsorgu->execute(array(
+            'id' => $_GET["kullanici_id"]
+        ));
+        while ($gunbaslabitircek = $gunbaslabitirsorgu->fetch(PDO::FETCH_ASSOC)) {
+            if ($gunbaslabitircek["gunebaslabitir_durum"] == "basla") { ?>
 
+                <div class='alert alert-dismissable alert-bg-white alert-success'>
+                    <div class='icon'><i class='fa fa-sun-o'></i></div>
+                    <?php echo $gunbaslabitircek["gunebaslabitir_metin"];?>  <strong>(<?php echo $gunbaslabitircek["gunebaslabitir_zaman"];?>)</strong>
+                </div>
+
+            <?php } else if ($gunbaslabitircek["gunebaslabitir_durum"] == "bitir") { ?>
+
+                <div class='alert alert-dismissable alert-bg-white alert-info'>
+                    <div class='icon'><i class='fa fa-moon-o'></i></div>
+                    <?php echo $gunbaslabitircek["gunebaslabitir_metin"];?>  <strong>(<?php echo $gunbaslabitircek["gunebaslabitir_zaman"];?>)</strong>
+                </div>
+
+        <?php }
+        } ?>
     </div>
 </div>
 

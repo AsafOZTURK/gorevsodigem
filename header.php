@@ -64,7 +64,7 @@ if ($say == 0) {
                             </div>
                             <div id="bs-example-navbar-collapse-3" class="collapse navbar-collapse">
                                 <ul class="nav navbar-nav">
-                                    <li><a href="anasayfa.php"> <i class="fa fa-bullhorn fa-3x"></i> Olaylar</a></li>
+                                    <li><a href="olaylar.php"> <i class="fa fa-bullhorn fa-3x"></i> Olaylar</a></li>
                                     <li><a href="tum-gorevler.php"> <i class="fa fa-th-list fa-3x"></i>Tüm Görevler</a></li>
                                     <li><a href="fikir-havuzu.php"><i class="fa fa-lightbulb-o fa-3x"></i>Fikir Havuzu</a></li>
                                     <li><a href="personel.php"><i class="fa fa-users fa-3x"></i>Personel</a></li>
