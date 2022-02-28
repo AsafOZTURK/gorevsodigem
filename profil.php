@@ -178,22 +178,29 @@ $pkullanicicek = $pkullanicisor->fetch(PDO::FETCH_ASSOC);
                                                                     } ?>
                         </td>
                         <td>
+
                             <?php
                             switch ($gorevcek['gorev_durum']) {
                                 case '0': ?>
+
                                     <font color='#d44344'><b><i class="fa fa-exclamation-circle"></i> Başlanmadı</b></font><?php
-                                                                                                                            break;
-                                                                                                                        case '1': ?>
+
+                                    break;
+                                case '1': ?>
+
                                     <font color='#f9a546'><b><i class="fa fa-play"></i> Başlandı</b></font><?php
-                                                                                                                            break;
-                                                                                                                        case '2': ?>
+
+                                    break;
+                                case '2': ?>
+
                                     <font color='#0fb493'><b><i class="fa fa-check"></i> Tamamlandı</b></font><?php
-                                                                                                                            break;
-                                                                                                                    } ?>
+
+                                    break;
+                            } ?>
                         </td>
+
                         <td align='right'> </td>
                     </tr>
-
                 <?php } ?>
                 <tr>
                     <td colspan=5>
@@ -224,14 +231,18 @@ $pkullanicicek = $pkullanicisor->fetch(PDO::FETCH_ASSOC);
 
                 <div class='alert alert-dismissable alert-bg-white alert-success'>
                     <div class='icon'><i class='fa fa-sun-o'></i></div>
+
                     <?php echo $gunbaslabitircek["gunebaslabitir_metin"];?>  <strong>(<?php echo $gunbaslabitircek["gunebaslabitir_zaman"];?>)</strong>
+
                 </div>
 
             <?php } else if ($gunbaslabitircek["gunebaslabitir_durum"] == "bitir") { ?>
 
                 <div class='alert alert-dismissable alert-bg-white alert-info'>
                     <div class='icon'><i class='fa fa-moon-o'></i></div>
+
                     <?php echo $gunbaslabitircek["gunebaslabitir_metin"];?>  <strong>(<?php echo $gunbaslabitircek["gunebaslabitir_zaman"];?>)</strong>
+
                 </div>
 
         <?php }
