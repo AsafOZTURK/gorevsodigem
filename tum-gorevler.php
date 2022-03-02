@@ -27,7 +27,19 @@ include "header.php";
 
                 while ($gorevcek = $gorevsor->fetch(PDO::FETCH_ASSOC)) { ?>
                     <tr>
-                        <td><a href='profil.php?kullanici_id=<?php echo $gorevcek["kullanici_id"];?>'><?php echo $gorevcek["kullanici_ad"] . " " . $gorevcek["kullanici_soyad"];?></a><br /><small><?php echo $gorevcek["gorev_tarih"];?><br>25.02.2022 (17:00)</small><br /></td>
+                        <td><a href='profil.php?kullanici_id=<?php echo $gorevcek["kullanici_id"];?>'><?php echo $gorevcek["kullanici_ad"] . " " . $gorevcek["kullanici_soyad"];?></a><br /><small>
+                            <?php 
+                            $value = $gorevcek["gorev_tarih"];
+                            $v_year= substr($value,0,4);
+                            $v_month= substr($value,5,2);
+                            $v_day= substr($value,8,2);
+                            $v_hours = substr($value,11,2);
+                            $v_minute= substr($value,14,2);
+                            $value=$v_day.".".$v_month.".".$v_year. " (" . $v_hours . ":" . $v_minute . ")";
+                            echo $value;
+                            ?>
+
+                            <br>25.02.2022 (17:00)</small><br /></td> <!-- Buraya sonraki cumanın tarihi gelecek ama nasıl yapacağımı bilmiyorum daha-->
                         <td>
                             <?php 
                             $gorevlisor = $db->prepare("SELECT * 

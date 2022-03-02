@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Anamakine: localhost
--- Üretim Zamanı: 27 Şub 2022, 18:52:36
+-- Üretim Zamanı: 02 Mar 2022, 12:40:42
 -- Sunucu sürümü: 5.7.17-log
 -- PHP Sürümü: 5.6.30
 
@@ -70,10 +70,10 @@ CREATE TABLE `gorev` (
 --
 
 INSERT INTO `gorev` (`gorev_id`, `gorev_detay`, `gorev_veren`, `gorev_gorevli`, `gorev_tarih`, `gorev_bitistarih`, `gorev_durum`, `gorev_boyut`, `gorev_gizlilik`) VALUES
-(1, 'Deneme görevi 1', 1, 2, '2022-02-23 23:18:06', '0000-00-00 00:00:00', '1', '3', '1'),
-(2, 'Deneme görevi 2', 1, 1, '2022-02-23 23:18:45', '0000-00-00 00:00:00', '2', '5', '2'),
+(1, 'Deneme görevi 1', 1, 2, '2022-02-23 23:18:06', '0000-00-00 00:00:00', '0', '3', '1'),
+(2, 'Deneme görevi 2', 1, 1, '2022-02-23 23:18:45', '0000-00-00 00:00:00', '0', '5', '2'),
 (3, 'Deneme görevi 3', 3, 1, '2022-02-23 23:38:17', '0000-00-00 00:00:00', '1', '4', '1'),
-(4, 'Deneme görevi 4', 3, 1, '2022-02-23 23:38:29', '0000-00-00 00:00:00', '0', '1', '1'),
+(4, 'Deneme görevi 4', 3, 1, '2022-02-23 23:38:29', '0000-00-00 00:00:00', '2', '1', '1'),
 (5, 'Deneme görevi 5', 4, 3, '2022-02-24 10:18:52', '0000-00-00 00:00:00', '0', '2', '2');
 
 -- --------------------------------------------------------
@@ -191,31 +191,44 @@ INSERT INTO `olay` (`olay_id`, `olay_olusturan`, `olay_metin`, `olay_zaman`) VAL
 -- Tablo için indeksler `fikir`
 --
 ALTER TABLE `fikir`
-  ADD PRIMARY KEY (`fikir_id`);
+  ADD PRIMARY KEY (`fikir_id`),
+  ADD KEY `fikir_ekleyen` (`fikir_ekleyen`);
 
 --
 -- Tablo için indeksler `gorev`
 --
 ALTER TABLE `gorev`
-  ADD PRIMARY KEY (`gorev_id`);
+  ADD PRIMARY KEY (`gorev_id`),
+  ADD KEY `gorev_veren` (`gorev_veren`),
+  ADD KEY `gorev_gorevli` (`gorev_gorevli`);
 
 --
 -- Tablo için indeksler `gorevnotu`
 --
 ALTER TABLE `gorevnotu`
-  ADD PRIMARY KEY (`gorevnotu_id`);
+  ADD PRIMARY KEY (`gorevnotu_id`),
+  ADD KEY `gorevnotu_gorev` (`gorevnotu_gorev`),
+  ADD KEY `gorevnotu_ekleyen` (`gorevnotu_ekleyen`);
 
 --
 -- Tablo için indeksler `gunebaslabitir`
 --
 ALTER TABLE `gunebaslabitir`
-  ADD PRIMARY KEY (`gunebaslabitir_id`);
+  ADD PRIMARY KEY (`gunebaslabitir_id`),
+  ADD KEY `gunebaslabitir_kisi` (`gunebaslabitir_kisi`);
 
 --
 -- Tablo için indeksler `kullanici`
 --
 ALTER TABLE `kullanici`
-  ADD PRIMARY KEY (`kullanici_id`);
+  ADD PRIMARY KEY (`kullanici_id`),
+  ADD KEY `kullanici_id` (`kullanici_id`);
+
+--
+-- Tablo için indeksler `olay`
+--
+ALTER TABLE `olay`
+  ADD KEY `olay_olusturan` (`olay_olusturan`);
 
 --
 -- Dökümü yapılmış tablolar için AUTO_INCREMENT değeri
@@ -246,6 +259,42 @@ ALTER TABLE `gunebaslabitir`
 --
 ALTER TABLE `kullanici`
   MODIFY `kullanici_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+--
+-- Dökümü yapılmış tablolar için kısıtlamalar
+--
+
+--
+-- Tablo kısıtlamaları `fikir`
+--
+ALTER TABLE `fikir`
+  ADD CONSTRAINT `fikir_ibfk_1` FOREIGN KEY (`fikir_ekleyen`) REFERENCES `kullanici` (`kullanici_id`);
+
+--
+-- Tablo kısıtlamaları `gorev`
+--
+ALTER TABLE `gorev`
+  ADD CONSTRAINT `gorev_ibfk_1` FOREIGN KEY (`gorev_veren`) REFERENCES `kullanici` (`kullanici_id`),
+  ADD CONSTRAINT `gorev_ibfk_2` FOREIGN KEY (`gorev_gorevli`) REFERENCES `kullanici` (`kullanici_id`);
+
+--
+-- Tablo kısıtlamaları `gorevnotu`
+--
+ALTER TABLE `gorevnotu`
+  ADD CONSTRAINT `gorevnotu_ibfk_1` FOREIGN KEY (`gorevnotu_ekleyen`) REFERENCES `kullanici` (`kullanici_id`),
+  ADD CONSTRAINT `gorevnotu_ibfk_2` FOREIGN KEY (`gorevnotu_gorev`) REFERENCES `gorev` (`gorev_id`);
+
+--
+-- Tablo kısıtlamaları `kullanici`
+--
+ALTER TABLE `kullanici`
+  ADD CONSTRAINT `kullanici_ibfk_1` FOREIGN KEY (`kullanici_id`) REFERENCES `gunebaslabitir` (`gunebaslabitir_kisi`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Tablo kısıtlamaları `olay`
+--
+ALTER TABLE `olay`
+  ADD CONSTRAINT `olay_ibfk_1` FOREIGN KEY (`olay_olusturan`) REFERENCES `kullanici` (`kullanici_id`);
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

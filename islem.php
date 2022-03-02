@@ -261,3 +261,80 @@ if (isset($_POST["manuelolaykaydet"])) {
     }
 
 }
+
+if ($_GET["durumdegistir"] == 0) {
+    $kullaniciid = $_GET["kullanici_id"];
+    $gorevid = $_GET["gorevno"];
+
+    $durumdegistir = $db -> prepare("UPDATE gorev 
+    SET gorev_durum=:durum
+    WHERE gorev_id= $gorevid
+    ");
+
+    $update = $durumdegistir ->execute(array(
+        "durum" => 0
+    ));
+
+    if ($update) {
+
+        Header("Location:profil.php?kullanici_id=$kullaniciid&durum=basarili");
+        exit;
+
+    } else {
+
+        Header("Location:profil.php?kullanici_id=$kullaniciid&durum=basarisiz");
+        exit;
+    }
+}
+
+
+if ($_GET["durumdegistir"] == 1) {
+    $kullaniciid = $_GET["kullanici_id"];
+    $gorevid = $_GET["gorevno"];
+
+    $durumdegistir = $db -> prepare("UPDATE gorev 
+    SET gorev_durum=:durum
+    WHERE gorev_id = $gorevid
+    ");
+
+    $update = $durumdegistir ->execute(array(
+        "durum" => 1
+    ));
+
+    if ($update) {
+
+        Header("Location:profil.php?kullanici_id=$kullaniciid&durum=basarili");
+        exit;
+
+    } else {
+
+        Header("Location:profil.php?kullanici_id=$kullaniciid&durum=basarisiz");
+        exit;
+    }
+}
+
+
+if ($_GET["durumdegistir"] == 2) {
+    $kullaniciid = $_GET["kullanici_id"];
+    $gorevid = $_GET["gorevno"];
+
+    $durumdegistir = $db -> prepare("UPDATE gorev 
+    SET gorev_durum=:durum
+    WHERE gorev_id=$gorevid
+    ");
+
+    $update = $durumdegistir ->execute(array(
+        "durum" => 2,
+    ));
+
+    if ($update) {
+
+        Header("Location:profil.php?kullanici_id=$kullaniciid&durum=basarili");
+        exit;
+
+    } else {
+
+        Header("Location:profil.php?kullanici_id=$kullaniciid&durum=basarisiz");
+        exit;
+    }
+}

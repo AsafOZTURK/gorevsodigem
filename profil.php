@@ -58,6 +58,7 @@ $pkullanicicek = $pkullanicisor->fetch(PDO::FETCH_ASSOC);
             </div>
         </form>
     </div>
+
     <?php //sayfadaki kullanıcı bizsek güne başla menüsünü göstermek için
     if ($_GET["kullanici_id"] == $kullanicicek["kullanici_id"]) { ?>
         <div class='content'>
@@ -70,6 +71,7 @@ $pkullanicicek = $pkullanicisor->fetch(PDO::FETCH_ASSOC);
                     </div>
                     <div class='col-sm-2'>
                         <input type="hidden" name="gunebaslabitir_kisi" value="<?php echo $_GET["kullanici_id"]; ?>">
+                        
                         <?php
                         $gunebaslabitirsor = $db->prepare("SELECT * 
                         FROM gunebaslabitir 
@@ -77,6 +79,7 @@ $pkullanicicek = $pkullanicisor->fetch(PDO::FETCH_ASSOC);
                         ORDER BY gunebaslabitir_zaman DESC
                         LIMIT 1
                         ");
+
                         $gunebaslabitirsor->execute(array(
                             'id' => $_GET["kullanici_id"]
                         ));
@@ -134,7 +137,17 @@ $pkullanicicek = $pkullanicisor->fetch(PDO::FETCH_ASSOC);
 
                 while ($gorevcek = $gorevsor->fetch(PDO::FETCH_ASSOC)) { ?>
                     <tr>
-                        <td><?php echo $gorevcek["kullanici_ad"] . " " . $gorevcek["kullanici_soyad"]; ?><br><?php echo $gorevcek["gorev_tarih"]; ?><br>15.10.2021 (17:00)</td>
+                        <td><?php echo $gorevcek["kullanici_ad"] . " " . $gorevcek["kullanici_soyad"]; ?><br>
+                        <?php 
+                         $value = $gorevcek["gorev_tarih"];
+                         $v_year= substr($value,0,4);
+                         $v_month= substr($value,5,2);
+                         $v_day= substr($value,8,2);
+                         $v_hours = substr($value,11,2);
+                         $v_minute= substr($value,14,2);
+                         $value=$v_day.".".$v_month.".".$v_year. " (" . $v_hours . ":" . $v_minute . ")";
+                        echo $value; ?>
+                        <br>15.10.2021 (17:00)</td>
                         <td><strong>
                                 <?php
                                 if ($gorevcek["gorev_gizlilik"] == 2 & $gorevcek["gorev_gorevli"] != $kullanicicek["kullanici_id"]) { ?>
@@ -199,7 +212,32 @@ $pkullanicicek = $pkullanicisor->fetch(PDO::FETCH_ASSOC);
                             } ?>
                         </td>
 
-                        <td align='right'> </td>
+                        <td align='right'>
+                        <?php
+                            switch ($gorevcek['gorev_durum']) {
+                                case '0': ?>
+
+                                    <td align='right'>
+                                        <a href='islem.php?kullanici_id=<?php echo $kullanicicek["kullanici_id"];?>&gorevno=<?php echo $gorevcek["gorev_id"];?>&durumdegistir=1'><button class="btn btn-sm btn-info" type="button" style="width:90;"><i class="fa fa-play"></i> Başla</button></a> </td><?php
+                                    break;
+
+                                case '1': ?>
+
+                                    <td align='right'>
+                                        <a href='islem.php?kullanici_id=<?php echo $kullanicicek["kullanici_id"];?>&gorevno=<?php echo $gorevcek["gorev_id"];?>&durumdegistir=2'><button class="btn btn-sm btn-success" type="button" style="width:90;"><i class="fa fa-check"></i> Tamamla</button></a> 
+
+                                        <a href='islem.php?kullanici_id=<?php echo $kullanicicek["kullanici_id"];?>&gorevno=<?php echo $gorevcek["gorev_id"];?>&durumdegistir=0'><button class="btn btn-sm btn-primary" type="button" style="width:90;"><i class="fa fa-level-down"></i> Başlanmadı</button></a>  </td><?php
+                                    break;
+
+                                case '2': ?>
+
+                                    <td align='right'>
+                                        <a href='islem.php?kullanici_id=<?php echo $kullanicicek["kullanici_id"];?>&gorevno=<?php echo $gorevcek["gorev_id"];?>&durumdegistir=1'><button class="btn btn-sm btn-warning" type="button" style="width:90;"><i class="fa fa-level-down"></i> Başlandı</button></a> </td><?php
+
+                                    break;
+                            } ?>
+                        
+                        </td>
                     </tr>
                 <?php } ?>
                 <tr>
@@ -226,13 +264,23 @@ $pkullanicicek = $pkullanicisor->fetch(PDO::FETCH_ASSOC);
         $gunbaslabitirsorgu->execute(array(
             'id' => $_GET["kullanici_id"]
         ));
+
         while ($gunbaslabitircek = $gunbaslabitirsorgu->fetch(PDO::FETCH_ASSOC)) {
+
             if ($gunbaslabitircek["gunebaslabitir_durum"] == "basla") { ?>
 
                 <div class='alert alert-dismissable alert-bg-white alert-success'>
                     <div class='icon'><i class='fa fa-sun-o'></i></div>
-
-                    <?php echo $gunbaslabitircek["gunebaslabitir_metin"];?>  <strong>(<?php echo $gunbaslabitircek["gunebaslabitir_zaman"];?>)</strong>
+                    <?php
+                    $value = $gunbaslabitircek["gunebaslabitir_zaman"];
+                    $v_year= substr($value,0,4);
+                    $v_month= substr($value,5,2);
+                    $v_day= substr($value,8,2);
+                    $v_hours = substr($value,11,2);
+                    $v_minute= substr($value,14,2);
+                    $value=$v_day.".".$v_month.".".$v_year. "(" . $v_hours . ":" . $v_minute . ")";
+                    
+                    echo $gunbaslabitircek["gunebaslabitir_metin"];?>  <strong> <?php echo $value;?> </strong>
 
                 </div>
 
