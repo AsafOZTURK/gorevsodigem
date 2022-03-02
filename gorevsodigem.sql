@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Anamakine: localhost
--- Üretim Zamanı: 02 Mar 2022, 12:40:42
+-- Üretim Zamanı: 02 Mar 2022, 13:07:08
 -- Sunucu sürümü: 5.7.17-log
 -- PHP Sürümü: 5.6.30
 
@@ -267,33 +267,32 @@ ALTER TABLE `kullanici`
 -- Tablo kısıtlamaları `fikir`
 --
 ALTER TABLE `fikir`
-  ADD CONSTRAINT `fikir_ibfk_1` FOREIGN KEY (`fikir_ekleyen`) REFERENCES `kullanici` (`kullanici_id`);
+  ADD CONSTRAINT `fikir_ibfk_1` FOREIGN KEY (`fikir_ekleyen`) REFERENCES `kullanici` (`kullanici_id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Tablo kısıtlamaları `gorev`
 --
 ALTER TABLE `gorev`
-  ADD CONSTRAINT `gorev_ibfk_1` FOREIGN KEY (`gorev_veren`) REFERENCES `kullanici` (`kullanici_id`),
-  ADD CONSTRAINT `gorev_ibfk_2` FOREIGN KEY (`gorev_gorevli`) REFERENCES `kullanici` (`kullanici_id`);
+  ADD CONSTRAINT `gorev_ibfk_1` FOREIGN KEY (`gorev_veren`) REFERENCES `kullanici` (`kullanici_id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Tablo kısıtlamaları `gorevnotu`
 --
 ALTER TABLE `gorevnotu`
-  ADD CONSTRAINT `gorevnotu_ibfk_1` FOREIGN KEY (`gorevnotu_ekleyen`) REFERENCES `kullanici` (`kullanici_id`),
-  ADD CONSTRAINT `gorevnotu_ibfk_2` FOREIGN KEY (`gorevnotu_gorev`) REFERENCES `gorev` (`gorev_id`);
+  ADD CONSTRAINT `gorevnotu_ibfk_1` FOREIGN KEY (`gorevnotu_gorev`) REFERENCES `gorev` (`gorev_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `gorevnotu_ibfk_2` FOREIGN KEY (`gorevnotu_ekleyen`) REFERENCES `kullanici` (`kullanici_id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Tablo kısıtlamaları `kullanici`
+-- Tablo kısıtlamaları `gunebaslabitir`
 --
-ALTER TABLE `kullanici`
-  ADD CONSTRAINT `kullanici_ibfk_1` FOREIGN KEY (`kullanici_id`) REFERENCES `gunebaslabitir` (`gunebaslabitir_kisi`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE `gunebaslabitir`
+  ADD CONSTRAINT `gunebaslabitir_ibfk_1` FOREIGN KEY (`gunebaslabitir_kisi`) REFERENCES `kullanici` (`kullanici_id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Tablo kısıtlamaları `olay`
 --
 ALTER TABLE `olay`
-  ADD CONSTRAINT `olay_ibfk_1` FOREIGN KEY (`olay_olusturan`) REFERENCES `kullanici` (`kullanici_id`);
+  ADD CONSTRAINT `olay_ibfk_1` FOREIGN KEY (`olay_olusturan`) REFERENCES `kullanici` (`kullanici_id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
