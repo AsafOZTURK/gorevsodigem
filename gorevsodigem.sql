@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Anamakine: localhost
--- Üretim Zamanı: 02 Mar 2022, 13:07:08
+-- Üretim Zamanı: 03 Mar 2022, 14:48:18
 -- Sunucu sürümü: 5.7.17-log
 -- PHP Sürümü: 5.6.30
 
@@ -62,19 +62,22 @@ CREATE TABLE `gorev` (
   `gorev_bitistarih` datetime NOT NULL,
   `gorev_durum` set('0','1','2') COLLATE utf8_turkish_ci NOT NULL DEFAULT '0',
   `gorev_boyut` enum('1','2','3','4','5') COLLATE utf8_turkish_ci NOT NULL,
-  `gorev_gizlilik` enum('1','2') COLLATE utf8_turkish_ci NOT NULL
+  `gorev_gizlilik` enum('1','2') COLLATE utf8_turkish_ci NOT NULL,
+  `gorev_arsiv` enum('0','1') COLLATE utf8_turkish_ci NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_turkish_ci;
 
 --
 -- Tablo döküm verisi `gorev`
 --
 
-INSERT INTO `gorev` (`gorev_id`, `gorev_detay`, `gorev_veren`, `gorev_gorevli`, `gorev_tarih`, `gorev_bitistarih`, `gorev_durum`, `gorev_boyut`, `gorev_gizlilik`) VALUES
-(1, 'Deneme görevi 1', 1, 2, '2022-02-23 23:18:06', '0000-00-00 00:00:00', '0', '3', '1'),
-(2, 'Deneme görevi 2', 1, 1, '2022-02-23 23:18:45', '0000-00-00 00:00:00', '0', '5', '2'),
-(3, 'Deneme görevi 3', 3, 1, '2022-02-23 23:38:17', '0000-00-00 00:00:00', '1', '4', '1'),
-(4, 'Deneme görevi 4', 3, 1, '2022-02-23 23:38:29', '0000-00-00 00:00:00', '2', '1', '1'),
-(5, 'Deneme görevi 5', 4, 3, '2022-02-24 10:18:52', '0000-00-00 00:00:00', '0', '2', '2');
+INSERT INTO `gorev` (`gorev_id`, `gorev_detay`, `gorev_veren`, `gorev_gorevli`, `gorev_tarih`, `gorev_bitistarih`, `gorev_durum`, `gorev_boyut`, `gorev_gizlilik`, `gorev_arsiv`) VALUES
+(1, 'Deneme görevi 1', 1, 2, '2022-02-23 23:18:06', '0000-00-00 00:00:00', '1', '3', '1', '0'),
+(2, 'Deneme görevi 2', 1, 1, '2022-02-23 23:18:45', '0000-00-00 00:00:00', '0', '5', '2', '0'),
+(3, 'Deneme görevi 3', 3, 1, '2022-01-23 23:38:17', '0000-00-00 00:00:00', '1', '4', '1', '1'),
+(4, 'Deneme görevi 4', 3, 1, '2022-01-23 23:38:29', '0000-00-00 00:00:00', '2', '1', '1', '1'),
+(5, 'Deneme görevi 5', 4, 3, '2022-02-24 10:18:52', '0000-00-00 00:00:00', '2', '2', '2', '0'),
+(6, 'Deneme görevi 3.1', 3, 1, '2022-02-23 23:38:17', '0000-00-00 00:00:00', '1', '4', '1', '0'),
+(7, 'Deneme görevi 4.1', 3, 1, '2022-02-23 23:38:29', '0000-00-00 00:00:00', '2', '1', '1', '0');
 
 -- --------------------------------------------------------
 
@@ -132,11 +135,12 @@ INSERT INTO `gunebaslabitir` (`gunebaslabitir_id`, `gunebaslabitir_kisi`, `guneb
 (11, 3, 'Günü bitirme denemesi 5', '2022-02-27 17:44:55', 'bitir'),
 (12, 4, 'Güne başlama denemesi 6', '2022-02-27 17:45:15', 'basla'),
 (13, 4, 'Günü bitirme denemesi 6', '2022-02-27 17:45:23', 'bitir'),
-(14, 1, 'DENEME DENEME DENEME', '2022-02-27 18:29:29', 'basla'),
+(14, 1, 'örnek güne başlama metni', '2022-02-27 18:29:29', 'basla'),
 (15, 3, 'DENEME DENEME DENEME', '2022-02-27 18:31:35', 'basla'),
 (16, 2, 'DENEME DENEME DENEME', '2022-02-27 18:31:50', 'basla'),
 (17, 4, 'DENEME DENEME DENEME', '2022-02-27 18:32:23', 'basla'),
-(18, 4, 'deneme deneme deneme', '2022-02-27 18:32:37', 'bitir');
+(18, 4, 'deneme deneme deneme', '2022-02-27 18:32:37', 'bitir'),
+(19, 3, 'görev bitirildi', '2022-03-03 14:42:22', 'bitir');
 
 -- --------------------------------------------------------
 
@@ -243,7 +247,7 @@ ALTER TABLE `fikir`
 -- Tablo için AUTO_INCREMENT değeri `gorev`
 --
 ALTER TABLE `gorev`
-  MODIFY `gorev_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `gorev_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 --
 -- Tablo için AUTO_INCREMENT değeri `gorevnotu`
 --
@@ -253,7 +257,7 @@ ALTER TABLE `gorevnotu`
 -- Tablo için AUTO_INCREMENT değeri `gunebaslabitir`
 --
 ALTER TABLE `gunebaslabitir`
-  MODIFY `gunebaslabitir_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `gunebaslabitir_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 --
 -- Tablo için AUTO_INCREMENT değeri `kullanici`
 --

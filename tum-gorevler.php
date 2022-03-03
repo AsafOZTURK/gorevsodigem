@@ -1,10 +1,37 @@
 <?php 
-include "header.php"; 
+include "header.php";
+
+$gorevsor = $db->prepare("SELECT * 
+    FROM gorev 
+    INNER JOIN kullanici
+    ON gorev.gorev_veren=kullanici_id
+    WHERE gorev_arsiv=:arsiv
+    ");
+
+$gorevsor->execute(array( // 15 günü geçen görevler arşivlenmiş oluyor ve burayda göstermiyoruz
+    "arsiv" => 0
+)); 
+
+/* -----------------ARŞİVLENEN GÖREVLERİ SAYMA---------------*/
+$arsivsay = $db -> prepare("SELECT 
+    COUNT(gorev_arsiv) AS 'arsivlenen'
+    FROM gorev
+    WHERE gorev_arsiv=:arsiv
+");
+
+$arsivsay -> execute(array(
+    "arsiv" => 1
+));
+
+$arsiv = $arsivsay->fetch(PDO::FETCH_ASSOC);
+$sayi = $arsiv["arsivlenen"];
+/* -----------------------------------------------------------*/
+
 ?>
 
 <div class="panel panel-default">
     <div class="panel-heading">
-        <h4>Tüm Görevler &nbsp;&nbsp;<small>(Tamamlanıp arşivlenmiş <b>0 görev</b>)</small></h4>
+        <h4>Tüm Görevler &nbsp;&nbsp;<small>(Tamamlanıp arşivlenmiş <b><?php echo $sayi; ?> görev</b>)</small></h4>
     </div>
     <div class="panel-body">
         <table class="table table-striped">
@@ -18,12 +45,6 @@ include "header.php";
             </thead>
             <tbody>
                 <?php
-                $gorevsor = $db->prepare("SELECT * 
-                FROM gorev 
-                INNER JOIN kullanici
-                ON gorev.gorev_veren=kullanici_id
-                ");
-                $gorevsor->execute();
 
                 while ($gorevcek = $gorevsor->fetch(PDO::FETCH_ASSOC)) { ?>
                     <tr>

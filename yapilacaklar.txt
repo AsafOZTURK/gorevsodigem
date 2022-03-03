@@ -1,0 +1,33 @@
+////////// BİTENLER //////////
+- Kayıt olma
+- Giriş yapma
+- Çıkış yapma
+- Veritabanı bağlantısı
+- Header footer ayırma, tüm sayfalara ekleme
+- Giriş yapmayan kişilerin sayfalara girişini önleme
+- Profil sayfası oluşturma
+- Personelleri yazdırma
+- Gorev tablosu oluşturma, gorev oluşturma
+- Gorev ayrıntısı sayfasını oluşturma ve görevlerin ayrıntılarını hazırlama
+- Gizli  görevleri sadece görevlinin görmesini sağlama
+- Görev zorluğu için yıldız sayısı yazdırma işlemleri
+- Gorevlere not ekleme, gorevnotu tablosu oluşturma
+- Fikir tablosu oluşturma, fikir oluşturma
+- Manuel olay kaydetme
+- Personeller sayfasına kişilerin aktif görevlerini yazdırma
+- Güne başlama bitirme oluşturma ve bunları yazdırma 
+- Tüm görevleri yazdırma
+- Gorevlerin başlanma bitirme durumlarını değiştirme
+- Personeller sayfasına günebaşlama bitirme kayıtlarını yazdırma
+- Profil sayfasında görev durumları değiştirmeyi sadece görevli kişiye özel gösterme
+- Görev tarihlerinin istenen biçimde yazdırılması için dönüştürme
+- 15 günü geçen görevleri arşivleme ve sayfalarda yazdırılmasını önleme
+- Arşivlenen görev sayısını yazdırma
+
+
+
+////////// YAPILACAKLAR - yapamadıklarım //////////
+- Olaylar sayfasını yapma (olayların nasıl kaydedildiğini veya nasıl sıralı bir şekilde yazdırıldığını anlamadım)
+- Görev oluştururken bu cuma ve haftaya cuma tarihlerini kaydetme ( php ? - mysql ?)
+- Gorev veren ve gorevlinin isimlerini tek sql sorgusu ile çekme
+- Arma puanları ekleme (BELKİ) 

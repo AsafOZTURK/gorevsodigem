@@ -2,6 +2,7 @@
 ob_start();
 session_start();
 include "baglanti.php";
+include "gorev-arsivle.php";
 
 $kullanicisor = $db->prepare("SELECT * FROM kullanici WHERE kullanici_mail=:mail");
 $kullanicisor->execute(array(
@@ -11,11 +12,13 @@ $kullanicisor->execute(array(
 $kullanicicek = $kullanicisor->fetch(PDO::FETCH_ASSOC);
 
 
-$say = $kullanicisor->rowCount();  // giris yapmış kullanıcı var mı diye bakıyoruz yoksa giriş sayfasına yönlendir<
+/*----------- giris yapmış kullanıcı var mı diye bakıyoruz yoksa giriş sayfasına yönlendiriyoruz*--------------*/
+$say = $kullanicisor->rowCount(); 
 if ($say == 0) {
     Header("Location:index.php?durum=izinsiz");
     exit;
 }
+/*---------------------------------------------------------------------------------*/
 
 ?>
 <!DOCTYPE html>

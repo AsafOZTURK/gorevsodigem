@@ -8,6 +8,22 @@ $pkullanicisor->execute(array(
 
 $pkullanicicek = $pkullanicisor->fetch(PDO::FETCH_ASSOC);
 
+
+$arsivsay = $db -> prepare("SELECT 
+    COUNT(gorev_arsiv) AS 'arsivlenen'
+    FROM gorev
+    WHERE gorev_gorevli=:id
+    AND gorev_arsiv=:arsiv
+");
+
+$arsivsay -> execute(array(
+    "id" => $_GET["kullanici_id"],
+    "arsiv" => 1
+));
+
+$arsiv = $arsivsay->fetch(PDO::FETCH_ASSOC);
+$sayi = $arsiv["arsivlenen"];
+
 ?>
 
 
@@ -129,10 +145,12 @@ $pkullanicicek = $pkullanicisor->fetch(PDO::FETCH_ASSOC);
                 INNER JOIN kullanici
                 ON gorev.gorev_veren=kullanici.kullanici_id
                 WHERE gorev_gorevli=:id
+                AND gorev_arsiv=:arsiv
                 ");
 
                 $gorevsor->execute(array(
-                    'id' => $_GET["kullanici_id"]
+                    'id' => $_GET["kullanici_id"],
+                    'arsiv' => 0
                 ));
 
                 while ($gorevcek = $gorevsor->fetch(PDO::FETCH_ASSOC)) { ?>
@@ -214,6 +232,7 @@ $pkullanicicek = $pkullanicisor->fetch(PDO::FETCH_ASSOC);
 
                         <td align='right'>
                         <?php
+                        if ($kullanicicek["kullanici_id"] == $_GET["kullanici_id"]) {
                             switch ($gorevcek['gorev_durum']) {
                                 case '0': ?>
 
@@ -235,14 +254,15 @@ $pkullanicicek = $pkullanicisor->fetch(PDO::FETCH_ASSOC);
                                         <a href='islem.php?kullanici_id=<?php echo $kullanicicek["kullanici_id"];?>&gorevno=<?php echo $gorevcek["gorev_id"];?>&durumdegistir=1'><button class="btn btn-sm btn-warning" type="button" style="width:90;"><i class="fa fa-level-down"></i> Başlandı</button></a> </td><?php
 
                                     break;
-                            } ?>
+                            } 
+                        }?>
                         
                         </td>
                     </tr>
                 <?php } ?>
                 <tr>
                     <td colspan=5>
-                        <center><small>Tamamlanmasnın ardından 15 gün geçen görevler arşivlenir. <?php echo $pkullanicicek["kullanici_ad"] . " " . $pkullanicicek["kullanici_soyad"]; ?> tarafından tamamlanıp arşivlenmiş <b>0 görev</b> var.</small></center>
+                        <center><small>Tamamlanmasnın ardından 15 gün geçen görevler arşivlenir. <?php echo $pkullanicicek["kullanici_ad"] . " " . $pkullanicicek["kullanici_soyad"]; ?> tarafından tamamlanıp arşivlenmiş <b> <?php echo $sayi; ?> görev</b> var.</small></center>
                     </td>
                 </tr>
             </tbody>
